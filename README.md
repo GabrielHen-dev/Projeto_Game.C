@@ -48,7 +48,7 @@
     </td>
     <td align="center">
       <a href="https://github.com/cpafpro">
-        <img src="https://avatars.githubusercontent.com/u/95945268?v=4" width="100" style="border-radius:50%;" alt="Foto de Claudemir Araújo"/>
+        <img src="https://avatars.githubusercontent.com/cpafpro" width="100" style="border-radius:50%;" alt="Foto de Claudemir Araújo"/>
         <br />
         <sub><b>Claudemir Araújo</b></sub>
       </a>
