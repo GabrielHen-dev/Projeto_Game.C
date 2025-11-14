@@ -43,15 +43,17 @@
 #define BOX_DOT        0x7E
 
 // screen constants
-#define SCRSTARTX      3      // Initial and final screen positions for the game
-#define SCRENDX        75     // It means the area that can be drawn 
-#define SCRSTARTY      1
-#define SCRENDY        23
+extern int SCRSTARTX;
+extern int SCRENDX;
+extern int SCRSTARTY;
+extern int SCRENDY;
 
-#define MINX           1      // min screen horizontal pos
-#define MINY           1      // min screen vertical pos
-#define MAXX           80     // max screen horizontal pos
-#define MAXY           24     // max screen vertical pos
+extern int MINX;
+extern int MINY;
+extern int MAXX;
+extern int MAXY;
+
+
 
 /**
  * Screen Colors type
@@ -94,6 +96,7 @@ static inline void screenClear()
     screenHomeCursor();
     printf("%s%s", ESC, CLEARSCREEN);
 }
+
 
 /**
  * Update screen imediatelly 
@@ -177,5 +180,7 @@ void screenGotoxy(int x, int y);
  * @param bg background color, can assume values from BLACK to LIGHTGRAY
 */
 void screenSetColor(screenColor fg, screenColor bg);
+void screenClearInside();
+
 
 #endif /* __SCREEN_H__ */

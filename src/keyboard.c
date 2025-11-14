@@ -5,64 +5,55 @@
  * Based on "From C to C++ course - 2002"
 */
 
-#include <termios.h>
-#include <unistd.h>
-
 #include "keyboard.h"
 
-static struct termios initialSettings, newSettings;
-static int peekCharacter;
+#ifdef _WIN32
+#include <conio.h>
 
+void keyboardInit() {}
+void keyboardDestroy() {}
 
-void keyboardInit()
-{
-    tcgetattr(0,&initialSettings);
-    newSettings = initialSettings;
-    newSettings.c_lflag &= ~ICANON;
-    newSettings.c_lflag &= ~ECHO;
-    newSettings.c_lflag &= ~ISIG;
-    newSettings.c_cc[VMIN] = 1;
-    newSettings.c_cc[VTIME] = 0;
-    tcsetattr(0, TCSANOW, &newSettings);
+int keyhit() {
+    return _kbhit();
 }
 
-void keyboardDestroy()
-{
-    tcsetattr(0, TCSANOW, &initialSettings);
+int readch() {
+    return _getch();
 }
 
-int keyhit()
-{
-    unsigned char ch;
-    int nread;
+#else
+#include <ncurses.h> //parte linux (Resolver...)
 
-    if (peekCharacter != -1) return 1;
-    
-    newSettings.c_cc[VMIN]=0;
-    tcsetattr(0, TCSANOW, &newSettings);
-    nread = read(0,&ch,1);
-    newSettings.c_cc[VMIN]=1;
-    tcsetattr(0, TCSANOW, &newSettings);
-    
-    if(nread == 1) 
-    {
-        peekCharacter = ch;
+static int initialized = 0;
+
+void keyboardInit() {
+    if (initialized) return;
+    initscr();
+    cbreak();
+    noecho();
+    nodelay(stdscr, TRUE);
+    keypad(stdscr, TRUE);
+    initialized = 1;
+}
+
+void keyboardDestroy() {
+    if (!initialized) return;
+    endwin();
+    initialized = 0;
+}
+
+int keyhit() {
+    int ch = getch();
+    if (ch != ERR) {
+        ungetch(ch);
         return 1;
     }
-    
     return 0;
 }
 
-int readch()
-{
-    char ch;
-
-    if(peekCharacter != -1)
-    {
-        ch = peekCharacter;
-        peekCharacter = -1;
-        return ch;
-    }
-    read(0,&ch,1);
-    return ch;
+int readch() {
+    return getch();
 }
+
+#endif
+

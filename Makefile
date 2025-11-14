@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -g -I$(INCLUDE_DIR)
 
 #project name
-PROJ_NAME = cli-lib-example
+PROJ_NAME = MindShot
 
 # Target directories
 BUILD_DIR   = build
@@ -18,7 +18,8 @@ OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 # Build target
 all: $(OBJ_DIR) $(OBJ_FILES)
 	@echo Creating $(BUILD_DIR)/$(PROJ_NAME)
-	@$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(PROJ_NAME) $(OBJ_FILES)
+	@$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(PROJ_NAME) $(OBJ_FILES) -lkernel32 -lwinmm
+
 
 # Build directory
 $(BUILD_DIR):
@@ -38,4 +39,4 @@ clean:
 
 # Run target
 run: all
-	./$(BUILD_DIR)/cli-lib-example
+	./$(BUILD_DIR)/MindShot

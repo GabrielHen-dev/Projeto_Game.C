@@ -1,87 +1,114 @@
-/**
- * screen.c
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
-
+#include <stdio.h>
 #include "screen.h"
+#include "screen_size.h"
 
-void screenDrawBorders() 
-{
-    char hbc = BOX_HLINE;
-    char vbc = BOX_VLINE;
-    
-    screenClear();
-    screenBoxEnable();
-    
-    screenGotoxy(MINX, MINY);
-    printf("%c", BOX_UPLEFT);
+int MINX = 1;
+int MINY = 1;
+int MAXX = 80;
+int MAXY = 24;
 
-    for (int i=MINX+1; i<MAXX; i++)
-    {
-        screenGotoxy(i, MINY);
-        printf("%c", hbc);
-    }
-    screenGotoxy(MAXX, MINY);
-    printf("%c", BOX_UPRIGHT);
-
-    for (int i=MINY+1; i<MAXY; i++)
-    {
-        screenGotoxy(MINX, i);
-        printf("%c", vbc);
-        screenGotoxy(MAXX, i);
-        printf("%c", vbc);
-    }
-
-    screenGotoxy(MINX, MAXY);
-    printf("%c", BOX_DWNLEFT);
-    for (int i=MINX+1; i<MAXX; i++)
-    {
-        screenGotoxy(i, MAXY);
-        printf("%c", hbc);
-    }
-    screenGotoxy(MAXX, MAXY);
-    printf("%c", BOX_DWNRIGHT);
-
-    screenBoxDisable();
-    
-}
+int SCRSTARTX = 3;
+int SCRENDX   = 75;
+int SCRSTARTY = 1;
+int SCRENDY   = 23;
 
 void screenInit(int drawBorders)
 {
-    screenClear();
-    if (drawBorders) screenDrawBorders();
-    screenHomeCursor();
-    screenHideCursor();
-}
+    //pega o tamanho do terminal
+    ScreenSize s = getScreenSize();
 
-void screenDestroy()
-{
-    printf("%s[0;39;49m", ESC); // Reset colors
-    screenSetNormal();
+    MAXX = s.cols;
+    MAXY = s.rows;
+
+    MINX = 1;
+    MINY = 1;
+
+    int offsetX = 0;
+    int offsetY = 0;
+
+#ifdef __MSYS__
+    offsetX = 1;
+    offsetY = 1;
+#elif defined(__MINGW32__) || defined(__MINGW64__)
+    offsetX = 1;
+    offsetY = 1;
+#else
+    offsetX = 0;
+    offsetY = 0;
+#endif
+
+    SCRSTARTX = 1 + offsetX;
+    SCRSTARTY = 1 + offsetY;
+
+    SCRENDX = MAXX - offsetX;
+    SCRENDY = MAXY - offsetY;
+
+    SCRSTARTX += 1;
+    SCRSTARTY += 1;
+
+    SCRENDX -= 1;
+    SCRENDY -= 1;
+
+    screenHideCursor();
     screenClear();
-    screenHomeCursor();
-    screenShowCursor();
+
+    if (drawBorders)
+    {
+        screenBoxEnable();
+
+        screenGotoxy(SCRSTARTX, SCRSTARTY);
+        putchar(BOX_UPLEFT);
+        for (int x = SCRSTARTX + 1; x < SCRENDX; x++)
+            putchar(BOX_HLINE);
+        putchar(BOX_UPRIGHT);
+
+        for (int y = SCRSTARTY + 1; y < SCRENDY; y++)
+        {
+            screenGotoxy(SCRSTARTX, y);
+            putchar(BOX_VLINE);
+
+            screenGotoxy(SCRENDX, y);
+            putchar(BOX_VLINE);
+        }
+
+        screenGotoxy(SCRSTARTX, SCRENDY);
+        putchar(BOX_DWNLEFT);
+        for (int x = SCRSTARTX + 1; x < SCRENDX; x++)
+            putchar(BOX_HLINE);
+        putchar(BOX_DWNRIGHT);
+
+        screenBoxDisable();
+    }
+
+    screenUpdate();
 }
 
 void screenGotoxy(int x, int y)
 {
-    x = ( x<0 ? 0 : x>=MAXX ? MAXX-1 : x);
-    y = ( y<0 ? 0 : y>MAXY ? MAXY : y);
-    
-    printf("%s[f%s[%dB%s[%dC", ESC, ESC, y, ESC, x);
+    printf("%s[%d;%dH", ESC, y, x);
 }
 
-void screenSetColor( screenColor fg, screenColor bg)
+void screenSetColor(screenColor fg, screenColor bg)
 {
-    char atr[] = "[0;";
-
-    if ( fg > LIGHTGRAY )
-    {
-        atr[1] = '1';
-		fg -= 8;
-    }
-
-    printf("%s%s%d;%dm", ESC, atr, fg+30, bg+40);
+    printf("%s[%d;%dm", ESC, 30 + fg, 40 + bg);
 }
+
+void screenDestroy()
+{
+    screenSetNormal();
+    screenShowCursor();
+    screenClear();
+}
+
+void screenClearInside()
+{
+    for (int y = SCRSTARTY + 1; y < SCRENDY; y++)
+    {
+        for (int x = SCRSTARTX + 1; x < SCRENDX; x++)
+        {
+            screenGotoxy(x, y);
+            putchar(' ');
+        }
+    }
+}
+
