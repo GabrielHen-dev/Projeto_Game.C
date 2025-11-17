@@ -15,10 +15,20 @@ INCLUDE_DIR = include
 SRC_FILES = $(notdir $(wildcard $(SRC_DIR)/*.c))
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 
+# Platform specific libraries
+LIBS =
+
+ifeq ($(OS),Windows_NT)
+LIBS += -lkernel32 -lwinmm
+else
+LIBS += -lncurses
+endif
+
 # Build target
 all: $(OBJ_DIR) $(OBJ_FILES)
 	@echo Creating $(BUILD_DIR)/$(PROJ_NAME)
 	@$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(PROJ_NAME) $(OBJ_FILES) -lkernel32 -lwinmm
+	@$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(PROJ_NAME) $(OBJ_FILES) $(LIBS)
 
 
 # Build directory
