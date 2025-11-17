@@ -12,7 +12,7 @@ static void desenharRuaBase()
     int midY = SCRSTARTY + ((SCRENDY - SCRSTARTY) - 1);
     int topY = SCRSTARTY + 1;
 
-    //calçadasup
+    //calçadaup
     for (int x = SCRSTARTX + 1; x < SCRENDX; x++)
     {
         screenGotoxy(x, topY);
@@ -48,7 +48,8 @@ static void desenharRuaBase()
 
 void cenaRua()
 {
-    screenFullClear();   // limpa a tela
+    screenFullClear();   // limpa a tela.
+    screenInit(1);
     int playerStartX = SCRSTARTX + 1; //player
     int playerStartY = SCRSTARTY + 2;
 
