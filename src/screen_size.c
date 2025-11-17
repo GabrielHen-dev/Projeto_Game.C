@@ -3,35 +3,31 @@
 #ifdef _WIN32
 #include <windows.h>
 
-ScreenSize getScreenSize() {
-    static int lastCols = 0;
-    static int lastRows = 0;
-
-    if (lastCols != 0 && lastRows != 0) {
-        ScreenSize s = { lastCols, lastRows };
-        return s;
-    }
-
+ScreenSize getScreenSize()
+{
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 
-    lastCols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-    lastRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+        return (ScreenSize){80, 24};
 
-    ScreenSize s = { lastCols, lastRows };
-    return s;
+    int cols = csbi.srWindow.Right  - csbi.srWindow.Left + 1;
+    int rows = csbi.srWindow.Bottom - csbi.srWindow.Top  + 1;
+
+    return (ScreenSize){cols, rows};
 }
 
 #else
-#include <sys/ioctl.h> //parte linux (Resolver...)
+#include <sys/ioctl.h>
 #include <unistd.h>
 
-ScreenSize getScreenSize() {
+ScreenSize getScreenSize()
+{
     struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-    ScreenSize s = { w.ws_col, w.ws_row };
-    return s;
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == -1)
+        return (ScreenSize){80, 24};
+
+    return (ScreenSize){w.ws_col, w.ws_row};
 }
 
 #endif

@@ -14,7 +14,6 @@ int SCRENDY   = 23;
 
 void screenInit(int drawBorders)
 {
-    //pega o tamanho do terminal
     ScreenSize s = getScreenSize();
 
     MAXX = s.cols;
@@ -23,31 +22,14 @@ void screenInit(int drawBorders)
     MINX = 1;
     MINY = 1;
 
-    int offsetX = 0;
-    int offsetY = 0;
+    SCRSTARTX = 2;
+    SCRSTARTY = 2;
 
-#ifdef __MSYS__
-    offsetX = 1;
-    offsetY = 1;
-#elif defined(__MINGW32__) || defined(__MINGW64__)
-    offsetX = 1;
-    offsetY = 1;
-#else
-    offsetX = 0;
-    offsetY = 0;
-#endif
+    SCRENDX = MAXX - 2;
+    SCRENDY = MAXY - 2;
 
-    SCRSTARTX = 1 + offsetX;
-    SCRSTARTY = 1 + offsetY;
-
-    SCRENDX = MAXX - offsetX;
-    SCRENDY = MAXY - offsetY;
-
-    SCRSTARTX += 1;
-    SCRSTARTY += 1;
-
-    SCRENDX -= 1;
-    SCRENDY -= 1;
+    if (SCRENDX < SCRSTARTX) SCRENDX = SCRSTARTX + 1;
+    if (SCRENDY < SCRSTARTY) SCRENDY = SCRSTARTY + 1;
 
     screenHideCursor();
     screenClear();
@@ -80,17 +62,17 @@ void screenInit(int drawBorders)
         screenBoxDisable();
     }
 
-    screenUpdate();
+    fflush(stdout);
 }
 
 void screenGotoxy(int x, int y)
 {
-    printf("%s[%d;%dH", ESC, y, x);
+    printf("\033[%d;%dH", y, x);
 }
 
 void screenSetColor(screenColor fg, screenColor bg)
 {
-    printf("%s[%d;%dm", ESC, 30 + fg, 40 + bg);
+    printf("\033[%d;%dm", 30 + fg, 40 + bg);
 }
 
 void screenDestroy()
@@ -98,6 +80,7 @@ void screenDestroy()
     screenSetNormal();
     screenShowCursor();
     screenClear();
+    fflush(stdout);
 }
 
 void screenClearInside()
@@ -110,5 +93,5 @@ void screenClearInside()
             putchar(' ');
         }
     }
+    fflush(stdout);
 }
-

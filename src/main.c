@@ -7,21 +7,16 @@
 #include "cena_bar.h"
 #include "dialogo_dealer.h"
 
-
 int main()
 {
     keyboardInit();
+    screenInit(1);   
 
-    screenInit(1);     //limpa tudo
-    cenaIntro();       
-
-    screenInit(1);     
-    cenaRua();         
-
-    screenInit(1);
+    cenaIntro();
+    cenaRua();
     cenaBar();
 
-    keyboardDestroy();
     screenDestroy();
+    keyboardDestroy();
     return 0;
 }
