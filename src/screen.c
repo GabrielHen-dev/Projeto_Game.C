@@ -70,6 +70,14 @@ void screenGotoxy(int x, int y)
     printf("\033[%d;%dH", y, x);
 }
 
+void screenFullClear()
+{
+    printf("\033[2J");   
+    printf("\033[H");    
+    fflush(stdout);
+}
+
+
 void screenSetColor(screenColor fg, screenColor bg)
 {
     printf("\033[%d;%dm", 30 + fg, 40 + bg);

@@ -181,6 +181,7 @@ void screenGotoxy(int x, int y);
 */
 void screenSetColor(screenColor fg, screenColor bg);
 void screenClearInside();
+void screenFullClear();
 
 
 #endif /* __SCREEN_H__ */

@@ -48,7 +48,7 @@ static void desenharRuaBase()
 
 void cenaRua()
 {
-
+    screenFullClear();   // limpa a tela
     int playerStartX = SCRSTARTX + 1; //player
     int playerStartY = SCRSTARTY + 2;
 
