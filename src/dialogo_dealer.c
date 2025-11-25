@@ -213,7 +213,7 @@ char dialogoDealer()
             screenSetColor(WHITE, BLACK);
 
             screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 5);
-            printf("Araujo: Tranquilo... porta é logo ali. Volte sempre!");
+            printf("Araujo: Tranquilo... porta e logo ali. Volte sempre!");
 
             screenSetColor(LIGHTGRAY, BLACK);
             screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 8);

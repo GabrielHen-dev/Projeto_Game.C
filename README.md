@@ -8,6 +8,59 @@
 
 ---
 
+# 🔫 MindShot — Duelo de Lógica
+
+MindShot é um duelo 1x1 contra o Professor em um bar sombrio com vibe de faroeste urbano.  
+O Dealer gira um revólver antigo e manda a pergunta de lógica.  
+Acertou? O outro puxa o gatilho.  
+Errou? Você mesmo puxa.  
+O tambor gira sempre, e se cair na bala real… acabou.
+
+---
+
+## 🎮 Como funciona
+- Turnos alternados: **você** → **professor**
+- Acertou → o outro dispara
+- Errou → você dispara
+- Tambor sempre gira:
+  - **Bala real:** morte instantânea  
+  - **Câmara vazia:** segue o jogo
+- Perguntas curtas: booleanos, expressões, sequências e mini-charadas  
+
+---
+
+## ▶️ Como executar
+
+### **1. Usando Makefile (recomendado)**  
+
+1. Compile o projeto:
+   ```bash
+   make
+
+2. Rode o programa:
+   ```bash
+   make run
+
+3. Limpe os arquivos gerados (opcional):
+   ```bash
+   make clean
+
+### **2. Compilação manual pelo terminal** 
+1.    
+    ```bash
+    gcc -o mindshot main.c game.c logic.c interface.c -lm
+    ./mindshot
+
+### **3. Compilação manual pelo terminal** 
+1.    
+    ```bash
+    gcc -o mindshot.exe main.c game.c logic.c interface.c -lm
+    mindshot.exe
+
+👥 Membros da Equipe
+
+---
+
 ## 👥 Membros da Equipe
 <table align="center">
   <tr>
