@@ -1,8 +1,6 @@
-#include "cena_selecao.h"
-
 #include <stdio.h>
 #include <string.h>
-
+#include "cena_selecao.h"
 #include "screen.h"
 #include "keyboard.h"
 

@@ -1,12 +1,9 @@
-#include "cena_jogo.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include "cena_jogo.h"
 #include "screen.h"
 #include "keyboard.h"
-
 #include "minigame_roleta.h"
 #include "npc.h"
 #include "player.h"
@@ -16,8 +13,7 @@ void desenharMesa(int larguraMesa, int alturaMesa);
 void desenharBar(void);
 
 
-void cenaJogo(NPC* professorEscolhido)
-{
+void cenaJogo(NPC* professorEscolhido) {
 
     screenInit(1);
     screenClearInside();
@@ -28,7 +24,7 @@ void cenaJogo(NPC* professorEscolhido)
     int alturaMesa = 5;
 
     int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larguraMesa / 2);
-    int inicioY = SCRSTARTY + 14; // MESMO valor da sua desenharMesa
+    int inicioY = SCRSTARTY + 14; // MESMO valor de desenharMesa
 
     // mover o professor escolhido para a direita da mesa
     // (apaga onde ele estava, muda x/y e desenha de novo)
@@ -45,8 +41,7 @@ void cenaJogo(NPC* professorEscolhido)
     playerDraw(&p);
     screenUpdate();
 
-    while (1)
-    {
+    while (1) {
         if (keyhit())
         {
             int c = readch();
@@ -63,8 +58,7 @@ void cenaJogo(NPC* professorEscolhido)
             if (c == 'a' || c == 'A') dx = -1;
             if (c == 'd' || c == 'D') dx = +1;
 
-            if (dx != 0 || dy != 0)
-            {
+            if (dx != 0 || dy != 0) {
                 // 1) move primeiro (atualiza oldX/oldY)
                 playerMove(&p, dx, dy);
 

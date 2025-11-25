@@ -90,4 +90,4 @@ int readch() {
     return -1;
 }
 
-#endif // FIM DO BLOCO LINUX (que usa termios)
+#endif

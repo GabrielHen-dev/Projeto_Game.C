@@ -1,11 +1,8 @@
-#include "dialogo_dealer.h"
-
 #include <stdio.h>
 #include <string.h>
-
+#include "dialogo_dealer.h"
 #include "screen.h"
 #include "keyboard.h"
-
 #include "cena_selecao.h"
 
 
@@ -23,7 +20,10 @@ static void esperarEnter()
 {
     while (1)
     {
-        if (keyhit() && readch() == 10)
+        if (keyhit() && readch() == 10) //linux
+            return;
+
+        else if (keyhit() && readch() == 13)//windows
             return;
     }
 }

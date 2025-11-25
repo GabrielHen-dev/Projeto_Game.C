@@ -1,15 +1,12 @@
-#include "cena_rua.h"
-
 #include <string.h>
-
+#include "cena_rua.h"
 #include "screen.h"
 #include "screen_size.h"
 #include "keyboard.h"
 #include "player.h"
 
 
-static void desenharRuaBase()
-{
+static void desenharRuaBase() {
     screenSetColor(LIGHTGRAY, BLACK);
 
     int midY = SCRSTARTY + ((SCRENDY - SCRSTARTY) - 1);
@@ -49,8 +46,7 @@ static void desenharRuaBase()
 }
 
 
-void cenaRua()
-{
+void cenaRua() {
     screenFullClear();   // limpa a tela.
     screenInit(1);
     int playerStartX = SCRSTARTX + 1; //player
@@ -63,8 +59,7 @@ void cenaRua()
     playerUpdateDraw(&p);
     screenUpdate();
 
-    while (1)
-    {
+    while (1) {
         if (keyhit())
         {
             int c = readch();
@@ -102,8 +97,8 @@ void cenaRua()
 
             if (p.y == portaY &&
                 p.x >= portaX &&
-                p.x < portaX + portaLargura)
-            {
+                p.x < portaX + portaLargura) {
+                    
                 return; //entra no bar
             }
         }

@@ -1,17 +1,15 @@
-#include "cena_intro.h"
 #include <stdio.h>
 #include <string.h>
-
 #include "screen.h"
 #include "screen_size.h"
 #include "keyboard.h"
 #include "player.h"
+#include "cena_intro.h"
 
-void cenaIntro()
-{
+void cenaIntro() {
     screenHideCursor();
 
-    const char* titulo = "MindShot";
+    const char* titulo = "MINDSHOT";
     const char* dica   = "Pressione ENTER para continuar";
 
     int largTitulo = strlen(titulo);

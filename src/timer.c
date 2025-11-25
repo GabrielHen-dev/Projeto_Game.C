@@ -5,9 +5,9 @@
  * Based on "From C to C++ course - 2002"
 */
 
-#include "timer.h"
 #include <sys/time.h>
 #include <stdio.h>
+#include "timer.h"
 
 static struct timeval timer, now;
 static int delay = -1;

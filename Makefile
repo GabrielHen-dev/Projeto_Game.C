@@ -17,7 +17,6 @@ OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 
 # Platform-specific libs
 LIBS =
-
 ifeq ($(OS),Windows_NT)
 LIBS += -lkernel32 -lwinmm
 else

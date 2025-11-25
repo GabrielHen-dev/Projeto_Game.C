@@ -4,10 +4,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-
-#include "screen.h"
-#include "keyboard.h"
-
 #include "npc.h"
 #include "player.h"
 #include "dialogo_dealer.h"
@@ -16,6 +12,9 @@
 #include "musica.h"
 #include "collision.h"
 #include "avatar_loader.h"
+#include "screen.h"
+#include "keyboard.h"
+
 
 
 static NPC bartender; //personagens
@@ -23,11 +22,8 @@ static NPC prof1, prof2, prof3, prof4;
 static int exitDoorX = 0;
 static int exitDoorY = 0;
 static int exitDoorW = 0;
- /*interação removida, colisão...*/
 
-
- void desenharMesa(int larguraMesa, int alturaMesa)
-{
+ void desenharMesa(int larguraMesa, int alturaMesa) {
     int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larguraMesa / 2);
     int inicioY = SCRSTARTY + 14;
 
@@ -51,10 +47,9 @@ static int exitDoorW = 0;
 
 
 
-void desenharBar()
-{
+void desenharBar() {
     
-    const char* titulo = "BAR DO ZE";
+    const char* titulo = "BAR DO ARAUJO";
     int larg = strlen(titulo);
     int tx = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larg / 2);
     int ty = SCRSTARTY + 2;
@@ -167,8 +162,7 @@ void desenharBar()
 }
 
 
-void cenaBar()
-{
+void cenaBar() {
     screenInit(1);
     desenharBar();
     musicaInit();  
@@ -204,7 +198,7 @@ void cenaBar()
                 p.x = p.oldX;
                 p.y = p.oldY;
             }
-/*colisão, considera nome e símbolo (player)*/
+            /*colisão, considera nome e símbolo (player)*/
             AABB pa_sym = { p.x, p.y, (int)strlen(p.simbolo), 1 };
 
             int nameW = (int)strlen(p.name);

@@ -1,10 +1,7 @@
-#include "player.h"
-
 #include <stdio.h>
 #include <string.h>
-
+#include "player.h"
 #include "screen.h"
-
 
 char DEFAULT_PLAYER_NAME[32] = "Player";
 

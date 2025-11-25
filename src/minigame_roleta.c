@@ -2,10 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-
 #include "screen.h"
 #include "keyboard.h"
-
 #include "minigame_roleta.h"
 #include "musica.h"
 
