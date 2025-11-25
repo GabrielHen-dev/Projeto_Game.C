@@ -1,5 +1,6 @@
 #include "screen_size.h"
 
+//pega win e linux, caso não retorne nada, pega tamanho padrao de 80x24
 #ifdef _WIN32
 #include <windows.h>
 

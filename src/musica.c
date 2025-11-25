@@ -1,7 +1,9 @@
 #include "musica.h"
-#include "screen.h"
 
 #include <stdio.h>
+
+#include "screen.h"
+
 
 //faixas para simular musica
 static const char* frames[] = {

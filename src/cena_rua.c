@@ -1,9 +1,12 @@
 #include "cena_rua.h"
+
+#include <string.h>
+
 #include "screen.h"
 #include "screen_size.h"
 #include "keyboard.h"
 #include "player.h"
-#include <string.h>
+
 
 static void desenharRuaBase()
 {
@@ -51,13 +54,13 @@ void cenaRua()
     screenFullClear();   // limpa a tela.
     screenInit(1);
     int playerStartX = SCRSTARTX + 1; //player
-    int playerStartY = SCRSTARTY + 2;
+    int playerStartY = SCRSTARTY + 4;
 
     Player p;
     playerInit(&p, playerStartX, playerStartY, ":)"); 
 
     desenharRuaBase();
-    playerDraw(&p);
+    playerUpdateDraw(&p);
     screenUpdate();
 
     while (1)
@@ -89,8 +92,7 @@ void cenaRua()
                 p.y = p.oldY;
 
 
-            playerErase(&p);
-            playerDraw(&p);
+            playerUpdateDraw(&p);
             screenUpdate();
 
             const char* porta = "[  BAR  ]";

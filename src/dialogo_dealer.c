@@ -1,8 +1,13 @@
 #include "dialogo_dealer.h"
-#include "screen.h"
-#include "keyboard.h"
+
 #include <stdio.h>
 #include <string.h>
+
+#include "screen.h"
+#include "keyboard.h"
+
+#include "cena_selecao.h"
+
 
 static void limparDialogo()
 {
@@ -18,7 +23,7 @@ static void esperarEnter()
 {
     while (1)
     {
-        if (keyhit() && readch() == 13)
+        if (keyhit() && readch() == 10)
             return;
     }
 }
@@ -38,7 +43,7 @@ static char esperarOpcao()
     }
 }
 
-void dialogoDealer()
+char dialogoDealer()
 {
     limparDialogo();
 
@@ -81,23 +86,21 @@ void dialogoDealer()
         screenSetColor(WHITE, BLACK);
         screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 5);
         printf("Escolha sua mesa, cada uma tem um mestre diferente:");
-
-        screenSetColor(CYAN, BLACK);
-        screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 7);
-        printf("A) Mesa 1 - Guilherme");
-
-        screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 8);
-        printf("B) Mesa 2 - Diego");
-
-        screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 9);
-        printf("C) Mesa 3 - Baudel");
-
-        screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 10);
-        printf("D) Mesa 4 - Lucas");
-
         screenUpdate();
 
-        char mesa = esperarOpcao();
+        int escolhaIdx = cenaSelecao();
+        if (escolhaIdx < 0)
+        {
+            limparDialogo();
+            screenSetColor(LIGHTGRAY, BLACK);
+            screenGotoxy(SCRSTARTX + 3, SCRSTARTY + 4);
+            printf("Ok, volta pro bar.");
+            screenUpdate();
+            esperarEnter();
+            return 'X';
+        }
+
+        char mesa = 'A' + (char)escolhaIdx;
         limparDialogo();
 
         screenSetColor(LIGHTGREEN, BLACK);
@@ -131,7 +134,7 @@ void dialogoDealer()
 
         screenUpdate();
         esperarEnter();
-        return;
+        return mesa;
     }
 
     if (escolha == 'B')
@@ -178,7 +181,7 @@ void dialogoDealer()
 
         screenUpdate();
         esperarEnter();
-        return;
+        return 'X';
     }
 
     if (escolha == 'C')
@@ -198,7 +201,7 @@ void dialogoDealer()
 
         screenUpdate();
         esperarEnter();
-        return;
+        return 'X';
     }
 
     if (escolha == 'D')
@@ -215,6 +218,7 @@ void dialogoDealer()
 
         screenUpdate();
         esperarEnter();
-        return;
+        return 'X';
     }
+    return 'X'; 
 }

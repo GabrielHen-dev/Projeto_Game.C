@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 
-// Terminal control sequences
 #define ESC            "\033"
 #define NORMALTEXT     "[0m"
 #define BOLDTEXT       "[1m"
@@ -23,7 +22,6 @@
 #define HIDECURSOR     "[?25l"
 #define CLEARSCREEN    "[2J"
 
-// BOX Drawing - Unix like terminals
 #define BOX_ENABLE     "(0"
 #define BOX_DISABLE    "(B"
 #define BOX_VLINE      0x78
@@ -42,7 +40,6 @@
 #define BOX_BLOCK      0x61
 #define BOX_DOT        0x7E
 
-// screen constants
 extern int SCRSTARTX;
 extern int SCRENDX;
 extern int SCRSTARTY;
@@ -53,44 +50,25 @@ extern int MINY;
 extern int MAXX;
 extern int MAXY;
 
-
-
-/**
- * Screen Colors type
-*/
 typedef enum {BLACK, RED, GREEN, BROWN, BLUE, MAGENTA, CYAN, LIGHTGRAY,
         DARKGRAY, LIGHTRED, LIGHTGREEN, YELLOW, LIGHTBLUE, 
         LIGHTMAGENTA, LIGHTCYAN, WHITE} screenColor; 
 
 
-
-/**
- * Move the cursor to position (0,0)
-*/
 static inline void screenHomeCursor()
 {
     printf("%s%s", ESC, HOMECURSOR);
 }
 
-/**
- * Show the cursor
-*/
 static inline void screenShowCursor()
 {
     printf("%s%s", ESC, SHOWCURSOR);
 }
 
-/**
- * Hide the cursor
-*/
 static inline void screenHideCursor()
 {
     printf("%s%s", ESC, HIDECURSOR);
 }
-
-/**
- * Clear the screen
-*/
 static inline void screenClear()
 {
     screenHomeCursor();
@@ -98,90 +76,52 @@ static inline void screenClear()
 }
 
 
-/**
- * Update screen imediatelly 
-*/
+/* update instantaneo da tela*/
 static inline void screenUpdate() {
     fflush(stdout);
 }
 
-/**
- * Set screen mode to "normal"
-*/
 static inline void screenSetNormal()
 {
     printf("%s%s", ESC, NORMALTEXT);
 }
 
-/**
- * Set screen mode to "bold"
-*/
 static inline void screenSetBold()
 {
     printf("%s%s", ESC, BOLDTEXT);
 }
 
-/**
- * Set screen mode to "blink"
-*/
 static inline void screenSetBlink()
 {
     printf("%s%s", ESC, BLINKTEXT);
 }
 
-/**
- * Set screen mode to "reverse"
-*/
 static inline void screenSetReverse()
 {
     printf("%s%s", ESC, REVERSETEXT);
 }
 
-/**
- * Enable BOX characters in terminal
-*/
 static inline void screenBoxEnable()
 {
     printf("%s%s", ESC, BOX_ENABLE);
 }
-
-/**
- * Disable BOX characters in terminal
-*/
 static inline void screenBoxDisable()
 {
     printf("%s%s", ESC, BOX_DISABLE);
 }
 
-/**
- * Clear the screen, set cursor to home position
- * and optionally draw borders on it.
- * 
- * @param drawBorders if not zero, draw borders on screen.
-*/
+
 void screenInit(int drawBorders);
 
-/**
- * Clear the screen and restores to initial state.
-*/
 void screenDestroy();
 
-/**
- * Move cursor to position (x,y)
- * @param x x position
- * @param y y position
- */ 
 
 void screenGotoxy(int x, int y);
 
-/**
- * Define text colors 
- * @param fg foreground color, can assume values from BLACK to WHITE
- * @param bg background color, can assume values from BLACK to LIGHTGRAY
-*/
+
 void screenSetColor(screenColor fg, screenColor bg);
 void screenClearInside();
 void screenFullClear();
 
 
-#endif /* __SCREEN_H__ */
+#endif

@@ -1,9 +1,11 @@
 #include "cena_intro.h"
+#include <stdio.h>
+#include <string.h>
+
 #include "screen.h"
 #include "screen_size.h"
 #include "keyboard.h"
-#include <stdio.h>
-#include <string.h>
+#include "player.h"
 
 void cenaIntro()
 {
@@ -33,13 +35,39 @@ void cenaIntro()
     screenGotoxy(dicaX, dicaY);
     printf("%s", dica);
 
+    char namebuf[32] = "";
+    int pos = 0;
+    int promptX = centroX - 10;
+    int promptY = centroY + 4; 
+    screenGotoxy(promptX, promptY);
+    printf("Nome: ");
     screenUpdate();
 
     while (1) {
         if (keyhit()) {
             int c = readch();
-            if (c == 13) return;
+            if (c == 13 || c == 10) {
+                if (pos > 0) {
+                    namebuf[pos] = '\0';
+                    playerSetDefaultName(namebuf);
+                }
+                return;
+            }
+            else if (c == 127 || c == 8) { 
+                if (pos > 0) {
+                    pos--; namebuf[pos] = '\0';
+                    screenGotoxy(promptX + 6 + pos, promptY);
+                    putchar(' ');
+                    screenGotoxy(promptX + 6 + pos, promptY);
+                    screenUpdate();
+                }
+            }
+            else if (c >= 32 && c < 127 && pos < (int)sizeof(namebuf)-1) {
+                namebuf[pos++] = (char)c; namebuf[pos] = '\0';
+                screenGotoxy(promptX + 6 + pos - 1, promptY);
+                putchar(c);
+                screenUpdate();
+            }
         }
     }
 }
-

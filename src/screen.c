@@ -1,7 +1,16 @@
+/**
+ * screen.c
+ * Created on Aug, 23th 2023
+ * Author: Tiago Barros
+ * Based on "From C to C++ course - 2002"
+*/
+
 #include <stdio.h>
 #include "screen.h"
 #include "screen_size.h"
+// #include "screen_size.h" // REMOVIDO/COMENTADO: Dependência problemática
 
+// Definicoes de variáveis globais (necessário, pois foram declaradas como 'extern' em screen.h)
 int MINX = 1;
 int MINY = 1;
 int MAXX = 80;
