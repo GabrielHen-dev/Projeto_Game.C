@@ -292,9 +292,10 @@ void cenaBar() {
 
             int ty = SCRSTARTY + 2;  //balcão
             int balcY = ty + 4;     
-            int colY = balcY + 1;   
+            int colY = balcY + 1;
+            int colY2 = balcY + 2;    
 
-            if (p.y == colY &&
+            if ((p.y == colY ||p.y == colY2)&&
                 p.x >= SCRSTARTX + 3 &&
                 p.x <= SCRENDX - 3)
             {

@@ -31,18 +31,16 @@ typedef struct {
 static Revolver revJogador;
 static Revolver revProfessor;
 
-//Revolveres e tiros
-
 static void initRevolver(Revolver* r)
 {
-    r->balaRealIndex = rand() % 6; // uma das 6 camaras tem a bala real
+    r->balaRealIndex = rand() % 6; 
     r->tiroAtual = 0;
 }
 
 static int executarTiro(Atirador quem,Revolver* r, NPC* prof)
 {
     if (r->tiroAtual >= 6) {
-        return 0; // ja passou das 6 camaras, ninguem morre aqui
+        return 0; 
     }
 
     int morreu = (r->tiroAtual == r->balaRealIndex);
@@ -82,13 +80,11 @@ static int executarTiro(Atirador quem,Revolver* r, NPC* prof)
         }
     }
 
-    r->tiroAtual++;   // esse revolver gastou uma câmara
+    r->tiroAtual++;  
 
     return morreu;
 }
 
-
-//bloco de perguntas
 static Pergunta perguntas[] = {
     {
         "1) Se todo programador da Cali gosta de C e Heitor e programador da Cali,\n"
@@ -374,8 +370,6 @@ static void embaralharPerguntas(void)
     }
 }
 
-
-// auxiliares de perguntas
 static char lerRespostaAlternativa(void)
 {
     while (1)
@@ -429,8 +423,6 @@ static void printMultilineAt(int x, int y, const char* text)
         }
     }
 }
-
-// função principal do minigame
 
 void minigameRoleta(NPC* prof)
 {
