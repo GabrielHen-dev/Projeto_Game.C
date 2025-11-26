@@ -17,7 +17,7 @@
 
 
 
-static NPC bartender; //personagens
+static NPC bartender; 
 static NPC prof1, prof2, prof3, prof4;
 static int exitDoorX = 0;
 static int exitDoorY = 0;
@@ -25,7 +25,7 @@ static int exitDoorW = 0;
 
  void desenharMesa(int larguraMesa, int alturaMesa) {
     int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larguraMesa / 2);
-    int inicioY = SCRSTARTY + 14;
+    int inicioY = SCRSTARTY + 15;
 
     screenGotoxy(inicioX, inicioY);
     printf("+");
@@ -112,7 +112,7 @@ void desenharBar() {
     npcInit(&prof3, m3x - 3, m3y, 'B', "Baudel");
     npcInit(&prof4, m4x + 5, m4y, 'L', "Lucas");
 
-    /*tenta rodar os desenhos dos personagens, caso não, roda só os traço*/
+    //tenta rodar os desenhos dos personagens, caso não, roda só os traço*/
     int nlines = 0;
     char** tmp = NULL;
 
@@ -169,7 +169,7 @@ void cenaBar() {
 
     Player p; //player
 
-    int pX = SCRSTARTX + (SCRENDX - SCRSTARTX) / 2; //inicio player
+    int pX = SCRSTARTX + (SCRENDX - SCRSTARTX) / 2; 
     int pY = SCRENDY - 2;
 
     playerInit(&p, pX, pY, ":)");
@@ -238,10 +238,10 @@ void cenaBar() {
 
             /* mesa central desenharMesa(4,4) */
             if (!collided) {
-                int larguraMesa = 4;
-                int alturaMesa = 4;
-                int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larguraMesa / 2);
-                int inicioY = SCRSTARTY + 14;
+                int larguraMesa = 5;
+                int alturaMesa = 5;
+                int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - ((larguraMesa) / 2);
+                int inicioY = SCRSTARTY + 15;
                 AABB mesaC = { inicioX, inicioY, larguraMesa, alturaMesa };
                 if (aabb_overlap(&pa_sym, &mesaC) || (pa_name.w>0 && aabb_overlap(&pa_name, &mesaC))) collided = 1;
             }

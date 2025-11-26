@@ -504,7 +504,6 @@ void minigameRoleta(NPC* prof)
 
         int acertou = (resp == q->respostaCorreta);
 
-        // Mensagem de acerto/erro levando em conta de quem é a vez
         screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 18);
         if (turno == TURNO_JOGADOR) {
             if (acertou) {
@@ -529,19 +528,19 @@ void minigameRoleta(NPC* prof)
 
         Atirador quem;
         if (turno == TURNO_JOGADOR) {
-            // sua vez de responder
+            
             quem = acertou ? ATIRADOR_PROFESSOR : ATIRADOR_JOGADOR;
         } else {
-            // vez do professor responder
+            
             quem = acertou ? ATIRADOR_JOGADOR : ATIRADOR_PROFESSOR;
         }
 
-        //É aqui que entra a lógica dos 2 revolveres
+        
         Revolver* revUsado;
         if (quem == ATIRADOR_JOGADOR)
-            revUsado = &revJogador;   // se quem atira é você -> usa seu revólver
+            revUsado = &revJogador;  
         else
-            revUsado = &revProfessor; // se quem atira é o prof -> usa o revólver dele
+            revUsado = &revProfessor; 
 
         int morreu = executarTiro(quem, revUsado, prof);
 
@@ -549,7 +548,7 @@ void minigameRoleta(NPC* prof)
             jogoAtivo = 0;
         } else {
             rodada++;
-            // alterna a vez de responder
+           
             turno = (turno == TURNO_JOGADOR) ? TURNO_PROFESSOR : TURNO_JOGADOR;
         }
 

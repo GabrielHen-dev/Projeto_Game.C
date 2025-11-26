@@ -43,8 +43,6 @@ void playerErase(Player* p)
     }
 }
 
-//verifica se o player está dentro da área jogável antes de desenhar nome e símbolo
-//verifica se nome é nulo
 void playerDraw(Player* p)
 {
     screenGotoxy(p->x, p->y);
@@ -83,10 +81,6 @@ void playerMove(Player* p, int dx, int dy)
 
 void playerUpdateDraw(Player* p)
 {
-    /* 3 passos: Apagar na última posição desenhada
-    Desenhar na posição atual
-    Atualizar drawX / drawY / drawNameX / drawNameY
-    ,e depois apaga o símbolo*/
     screenGotoxy(p->drawX, p->drawY);
     size_t len = strlen(p->simbolo);
     for (size_t i = 0; i < len; ++i) putchar(' ');

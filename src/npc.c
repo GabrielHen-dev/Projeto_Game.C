@@ -95,7 +95,7 @@ void npcDraw(const NPC* n)
     }
 }
 
-/*verifica ponteiro nulo e limpa NPC*/
+
 void npcErase(const NPC* n)
 {
     if (!n) return;
@@ -105,20 +105,23 @@ void npcErase(const NPC* n)
         int topy = n->y - n->avatar_lines / 2;
         for (int i = 0; i < n->avatar_lines; ++i) {
             screenGotoxy(topx, topy + i);
-            for (int k = 0; k < n->avatar_w; ++k) putchar(' ');
+            for (int k = 0; k < n->avatar_w; ++k) {
+                putchar(' ');
+            }
         }
-        if (n->nome != NULL) {
-            int namelen = (int)strlen(n->nome);
-            int nx = topx + (n->avatar_w - namelen) / 2;
-            screenGotoxy(nx, topy - 1);
-            for (int k = 0; k < namelen; ++k) putchar(' ');
-        }
-    } else {
-        if (n->nome != NULL) {
-            screenGotoxy(n->x - 1, n->y - 1);
-            printf("   ");
-        }
-        screenGotoxy(n->x, n->y);
-        putchar(' ');
     }
+
+     // apaga nome inteiro
+    if (n->nome != NULL)
+    {
+        screenGotoxy(n->x - 1, n->y - 1);
+        int len = (int)strlen(n->nome);
+        for (int i = 0; i < len; i++)
+            putchar(' ');
+    }
+    
+    // apaga símbolo
+    screenGotoxy(n->x, n->y);
+    putchar(' ');
 }
+
