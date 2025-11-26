@@ -1,4 +1,4 @@
-/*retorna null por padrão*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "avatar_loader.h"

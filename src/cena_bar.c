@@ -281,7 +281,7 @@ void cenaBar() {
         
             playerUpdateDraw(&p);
 
-            musicaTick(); //anima musica
+            musicaTick(); 
 
             screenUpdate();
 
@@ -290,7 +290,7 @@ void cenaBar() {
                 return; 
             }
 
-            int ty = SCRSTARTY + 2;  //balcão
+            int ty = SCRSTARTY + 2;  
             int balcY = ty + 4;     
             int colY = balcY + 1;
             int colY2 = balcY + 2;    
@@ -305,7 +305,6 @@ void cenaBar() {
                 if (ret >= 'A' && ret <= 'D')
                 {
                     int escolha = (int)(ret - 'A');
-                    /* Map escolha to professor NPCs: 0->prof1, 1->prof2, 2->prof3, 3->prof4 */
                     NPC* inimigo = NULL;
                     switch (escolha)
                     {
