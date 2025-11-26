@@ -465,7 +465,7 @@ void minigameRoleta(NPC* prof)
 
         screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 7);
         if (turno == TURNO_JOGADOR) {
-            printf("Vez %s de responder.", DEFAULT_PLAYER_NAME);
+            printf("Vez de %s responder.", DEFAULT_PLAYER_NAME);
         } else {
             printf("Vez de %s responder (voce escolhe a resposta).", prof->nome);
         }
