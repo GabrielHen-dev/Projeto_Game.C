@@ -17,11 +17,11 @@
 
 
 
-static NPC bartender; 
-static NPC prof1, prof2, prof3, prof4;
-static int exitDoorX = 0;
-static int exitDoorY = 0;
-static int exitDoorW = 0;
+NPC bartender; 
+NPC prof1, prof2, prof3, prof4;
+int exitDoorX = 0;
+int exitDoorY = 0;
+int exitDoorW = 0;
 
 static int any_overlap_recursive(const AABB* target, const AABB* list, int idx, int n)
 {
