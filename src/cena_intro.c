@@ -6,6 +6,8 @@
 #include "player.h"
 #include "cena_intro.h"
 
+extern Player player;
+
 void cenaIntro() {
     screenHideCursor();
 

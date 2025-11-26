@@ -6,7 +6,7 @@
 #include "keyboard.h"
 #include "minigame_roleta.h"
 #include "musica.h"
-
+#include "player.h" 
 
 typedef struct {
     const char* enunciado;
@@ -465,7 +465,7 @@ void minigameRoleta(NPC* prof)
 
         screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 7);
         if (turno == TURNO_JOGADOR) {
-            printf("SUA VEZ de responder.");
+            printf("Vez %s de responder.", DEFAULT_PLAYER_NAME);
         } else {
             printf("Vez de %s responder (voce escolhe a resposta).", prof->nome);
         }
@@ -474,14 +474,14 @@ void minigameRoleta(NPC* prof)
             screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 3);
             printf("Acertou: %s puxa o gatilho.", prof->nome);
             screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 4);
-            printf("Errou: VOCÊ puxa o gatilho.");
+            printf("Errou: Você puxa o gatilho.");
 
         }else{
             screenSetColor(WHITE, BLACK);
             screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 3);
-            printf("Acertou: O player puxa o gatilho.");
+            printf("Acertou: %s puxa o gatilho.",DEFAULT_PLAYER_NAME);
             screenGotoxy(SCRSTARTX + 4, SCRSTARTY + 4);
-            printf("Errou: VOCÊ puxa o gatilho.");
+            printf("Errou: Você puxa o gatilho.");
         }
 
         int baseX = SCRSTARTX + 4;    
@@ -511,12 +511,12 @@ void minigameRoleta(NPC* prof)
                 printf("Acertou! %s vai puxar o gatilho.", prof->nome);
             } else {
                 screenSetColor(RED, BLACK);
-                printf("Errou! VOCE vai puxar o gatilho.");
+                printf("Errou! %s vai puxar o gatilho.",DEFAULT_PLAYER_NAME);
             }
         } else {
             if (acertou) {
                 screenSetColor(LIGHTGREEN, BLACK);
-                printf("Acertou! VOCE vai puxar o gatilho.");
+                printf("Acertou! %s vai puxar o gatilho.",DEFAULT_PLAYER_NAME);
             } else {
                 screenSetColor(RED, BLACK);
                 printf("Errou! %s vai puxar o gatilho.", prof->nome);

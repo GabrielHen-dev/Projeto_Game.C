@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "dialogo_dealer.h": "c"
+        "dialogo_dealer.h": "c",
+        "typeinfo": "c"
     }
 }

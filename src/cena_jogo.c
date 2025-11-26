@@ -9,6 +9,8 @@
 #include "player.h"
 #include "musica.h"
 
+extern Player player;
+
 void desenharMesa(int larguraMesa, int alturaMesa);
 void desenharBar(void);
 
@@ -27,12 +29,12 @@ void cenaJogo(NPC* professorEscolhido) {
 
     npcErase(professorEscolhido);
     professorEscolhido->x = inicioX + larguraMesa + 3;
-    professorEscolhido->y = inicioY + 2;
+    professorEscolhido->y = inicioY + 3;
     npcDraw(professorEscolhido);
 
     Player p;
     int pX = SCRSTARTX + (SCRENDX - SCRSTARTX) / 2;
-    int pY = SCRSTARTY + 8;
+    int pY = SCRSTARTY + 7;
 
     playerInit(&p, pX, pY, ":)");
     playerDraw(&p);
@@ -63,11 +65,9 @@ void cenaJogo(NPC* professorEscolhido) {
                 if (p.x >= SCRENDX - 2)   p.x = SCRENDX - 2;
                 if (p.y <= SCRSTARTY + 1) p.y = SCRSTARTY + 1;
                 if (p.y >= SCRENDY - 1)   p.y = SCRENDY - 1;
-
                 
                 playerErase(&p);
 
-                
                 playerDraw(&p);
             }
 

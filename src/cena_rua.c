@@ -99,7 +99,7 @@ void cenaRua() {
                 p.x >= portaX &&
                 p.x < portaX + portaLargura) {
                     
-                return; //entra no bar
+                return;
             }
         }
     }

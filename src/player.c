@@ -5,6 +5,8 @@
 
 char DEFAULT_PLAYER_NAME[32] = "Player";
 
+Player player; 
+
 void playerInit(Player* p, int startX, int startY, const char* simbolo)
 {
     p->x = startX;
