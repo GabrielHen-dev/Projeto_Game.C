@@ -68,6 +68,17 @@ void cenaJogo(NPC* professorEscolhido) {
                 
                 playerErase(&p);
 
+                /* redraw the whole scene to restore any elements erased by playerErase */
+                screenFullClear();
+                screenInit(1);
+                desenharBar();
+                musicaInit();
+
+                /* reposition and redraw the chosen professor for the jogo scene */
+                professorEscolhido->x = inicioX + larguraMesa + 3;
+                professorEscolhido->y = inicioY + 3;
+                npcDraw(professorEscolhido);
+
                 playerDraw(&p);
             }
 

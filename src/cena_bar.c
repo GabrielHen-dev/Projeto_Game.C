@@ -23,6 +23,13 @@ static int exitDoorX = 0;
 static int exitDoorY = 0;
 static int exitDoorW = 0;
 
+static int any_overlap_recursive(const AABB* target, const AABB* list, int idx, int n)
+{
+    if (idx >= n) return 0;
+    if (aabb_overlap(target, &list[idx])) return 1;
+    return any_overlap_recursive(target, list, idx + 1, n);
+}
+
  void desenharMesa(int larguraMesa, int alturaMesa) {
     int inicioX = SCRSTARTX + ((SCRENDX - SCRSTARTX) / 2) - (larguraMesa / 2);
     int inicioY = SCRSTARTY + 15;
@@ -216,25 +223,29 @@ void cenaBar() {
                 if (aabb_overlap(&pa_sym, &bname) || (pa_name.w>0 && aabb_overlap(&pa_name, &bname))) collided = 1;
             }
 
-            /* professores */
-            AABB a;
-            a.w = 1; a.h = 1;
+            AABB* profBodies = calloc(4, sizeof(AABB));
+            AABB* profNames = calloc(4, sizeof(AABB));
+            if (profBodies != NULL && profNames != NULL) {
+                profBodies[0].x = prof1.x; profBodies[0].y = prof1.y; profBodies[0].w = 1; profBodies[0].h = 1;
+                profBodies[1].x = prof2.x; profBodies[1].y = prof2.y; profBodies[1].w = 1; profBodies[1].h = 1;
+                profBodies[2].x = prof3.x; profBodies[2].y = prof3.y; profBodies[2].w = 1; profBodies[2].h = 1;
+                profBodies[3].x = prof4.x; profBodies[3].y = prof4.y; profBodies[3].w = 1; profBodies[3].h = 1;
 
-            a.x = prof1.x; a.y = prof1.y;
-            if (!collided && (aabb_overlap(&pa_sym, &a) || (pa_name.w>0 && aabb_overlap(&pa_name, &a)))) collided = 1;
-            if (!collided && prof1.nome != NULL) { AABB n1 = { prof1.x - 1, prof1.y - 1, (int)strlen(prof1.nome), 1 }; if (aabb_overlap(&pa_sym, &n1) || (pa_name.w>0 && aabb_overlap(&pa_name, &n1))) collided = 1; }
+                profNames[0].x = prof1.x - 1; profNames[0].y = prof1.y - 1; profNames[0].w = prof1.nome ? (int)strlen(prof1.nome) : 0; profNames[0].h = 1;
+                profNames[1].x = prof2.x - 1; profNames[1].y = prof2.y - 1; profNames[1].w = prof2.nome ? (int)strlen(prof2.nome) : 0; profNames[1].h = 1;
+                profNames[2].x = prof3.x - 1; profNames[2].y = prof3.y - 1; profNames[2].w = prof3.nome ? (int)strlen(prof3.nome) : 0; profNames[2].h = 1;
+                profNames[3].x = prof4.x - 1; profNames[3].y = prof4.y - 1; profNames[3].w = prof4.nome ? (int)strlen(prof4.nome) : 0; profNames[3].h = 1;
 
-            a.x = prof2.x; a.y = prof2.y;
-            if (!collided && (aabb_overlap(&pa_sym, &a) || (pa_name.w>0 && aabb_overlap(&pa_name, &a)))) collided = 1;
-            if (!collided && prof2.nome != NULL) { AABB n2 = { prof2.x - 1, prof2.y - 1, (int)strlen(prof2.nome), 1 }; if (aabb_overlap(&pa_sym, &n2) || (pa_name.w>0 && aabb_overlap(&pa_name, &n2))) collided = 1; }
-
-            a.x = prof3.x; a.y = prof3.y;
-            if (!collided && (aabb_overlap(&pa_sym, &a) || (pa_name.w>0 && aabb_overlap(&pa_name, &a)))) collided = 1;
-            if (!collided && prof3.nome != NULL) { AABB n3 = { prof3.x - 1, prof3.y - 1, (int)strlen(prof3.nome), 1 }; if (aabb_overlap(&pa_sym, &n3) || (pa_name.w>0 && aabb_overlap(&pa_name, &n3))) collided = 1; }
-
-            a.x = prof4.x; a.y = prof4.y;
-            if (!collided && (aabb_overlap(&pa_sym, &a) || (pa_name.w>0 && aabb_overlap(&pa_name, &a)))) collided = 1;
-            if (!collided && prof4.nome != NULL) { AABB n4 = { prof4.x - 1, prof4.y - 1, (int)strlen(prof4.nome), 1 }; if (aabb_overlap(&pa_sym, &n4) || (pa_name.w>0 && aabb_overlap(&pa_name, &n4))) collided = 1; }
+                if (!collided) {
+                    if (any_overlap_recursive(&pa_sym, profBodies, 0, 4)) collided = 1;
+                }
+                if (!collided && pa_name.w > 0) {
+                    if (any_overlap_recursive(&pa_name, profBodies, 0, 4)) collided = 1;
+                    if (!collided && any_overlap_recursive(&pa_name, profNames, 0, 4)) collided = 1;
+                }
+            }
+            free(profBodies);
+            free(profNames);
 
             /* mesa central desenharMesa(4,4) */
             if (!collided) {
@@ -262,24 +273,57 @@ void cenaBar() {
                 int m4x = SCRENDX - 12; 
                 int m4y = SCRENDY - 7;
 
-                AABB m1 = { m1x, m1y, 3, 2 };
-                AABB m2 = { m2x, m2y, 3, 2 };
-                AABB m3 = { m3x, m3y, 3, 2 };
-                AABB m4 = { m4x, m4y, 3, 2 };
+                AABB* mesas = calloc(4, sizeof(AABB));
+                if (mesas) {
+                    mesas[0].x = m1x; mesas[0].y = m1y; mesas[0].w = 3; mesas[0].h = 2;
+                    mesas[1].x = m2x; mesas[1].y = m2y; mesas[1].w = 3; mesas[1].h = 2;
+                    mesas[2].x = m3x; mesas[2].y = m3y; mesas[2].w = 3; mesas[2].h = 2;
+                    mesas[3].x = m4x; mesas[3].y = m4y; mesas[3].w = 3; mesas[3].h = 2;
 
-                if (aabb_overlap(&pa_sym, &m1) || aabb_overlap(&pa_sym, &m2) || aabb_overlap(&pa_sym, &m3) || aabb_overlap(&pa_sym, &m4) ||
-                    (pa_name.w>0 && (aabb_overlap(&pa_name, &m1) || aabb_overlap(&pa_name, &m2) || aabb_overlap(&pa_name, &m3) || aabb_overlap(&pa_name, &m4))))
-                {
-                    collided = 1;
+                    if (any_overlap_recursive(&pa_sym, mesas, 0, 4)) collided = 1;
+                    if (!collided && pa_name.w > 0 && any_overlap_recursive(&pa_name, mesas, 0, 4)) collided = 1;
                 }
+                free(mesas);
             }
 
             if (!collided && pa_name.w>0 && pa_name.y < SCRSTARTY + 1) collided = 1;
 
             if (collided) { p.x = p.oldX; p.y = p.oldY; }
 
-        
             playerUpdateDraw(&p);
+
+            /* restore mesas and professor names that playerUpdateDraw may have erased */
+            {
+                int ty = SCRSTARTY + 2;
+                int balcY = ty + 4;
+
+                int m1x = SCRSTARTX + 8;
+                int m1y = balcY + 4;
+
+                int m2x = SCRENDX - 12;
+                int m2y = balcY + 4;
+
+                int m3x = SCRSTARTX + 8;
+                int m3y = SCRENDY - 7;
+
+                int m4x = SCRENDX - 12; 
+                int m4y = SCRENDY - 7;
+
+                screenGotoxy(m1x, m1y);     printf("[ ]");
+                screenGotoxy(m1x, m1y + 1); printf(" | ");
+                screenGotoxy(m2x, m2y);     printf("[ ]");
+                screenGotoxy(m2x, m2y + 1); printf(" | ");
+                screenGotoxy(m3x, m3y);     printf("[ ]");
+                screenGotoxy(m3x, m3y + 1); printf(" | ");
+                screenGotoxy(m4x, m4y);     printf("[ ]");
+                screenGotoxy(m4x, m4y + 1); printf(" | ");
+
+                npcDraw(&prof1);
+                npcDraw(&prof2);
+                npcDraw(&prof3);
+                npcDraw(&prof4);
+                npcDraw(&bartender);
+            }
 
             musicaTick(); 
 
